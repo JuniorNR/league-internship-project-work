@@ -1,0 +1,14 @@
+.TasksList__item {
+  border-bottom: 1px solid #c4c4c4;
+  padding: 0.5rem 1rem;
+}
+
+.TasksList__info {
+  margin-right: 10px;
+  width: 380px;
+}
+
+.TasksList__controls {
+  align-items: flex-start;
+  width: 150px;
+}

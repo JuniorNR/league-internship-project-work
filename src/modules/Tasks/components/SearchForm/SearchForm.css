@@ -1,0 +1,7 @@
+.searchForm {
+  margin-bottom: 15px;
+}
+
+.searchForm button, .searchForm input {
+  font-size: 14px;
+}
