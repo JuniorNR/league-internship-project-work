@@ -1,13 +1,10 @@
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 
 import { TaskEntity } from 'domains/index';
 
 import './TasksListItem.css';
 
 export const TasksListItem = ({ name, id, info, isImportant, isDone }: TaskEntity): JSX.Element => {
-  const buttonImportantRef = useRef<HTMLButtonElement>(null);
-  const buttonDoneRef = useRef<HTMLButtonElement>(null);
-
   const [isDoneItem, setIsDoneItem] = useState(isDone);
   const [isImportantItem, setIsImportantItem] = useState(isImportant);
 
@@ -41,7 +38,6 @@ export const TasksListItem = ({ name, id, info, isImportant, isDone }: TaskEntit
       </div>
       <div className="TasksList__controls d-flex justify-content-between">
         <button
-          ref={buttonImportantRef}
           type="button"
           className={`controls__btn btn btn-sm btn-important ${
             isImportantItem ? 'bg-success text-white' : 'btn-outline-success'
@@ -50,17 +46,13 @@ export const TasksListItem = ({ name, id, info, isImportant, isDone }: TaskEntit
           disabled={isDoneItem ? true : false}>
           <i className="fa fa-info"></i>
         </button>
-        <button
-          ref={buttonDoneRef}
-          type="button"
-          className="controls__btn btn btn-outline-danger btn-sm"
-          onClick={onChangeDone}>
+        <button type="button" className="controls__btn btn btn-outline-danger btn-sm" onClick={onChangeDone}>
           <i className="fa fa-check"></i>
         </button>
         <button type="button" className="controls__btn btn btn-outline-danger btn-sm">
           <i className="fa fa-trash-o"></i>
         </button>
-        <a href="#" className="controls__btn btn btn-outline-secondary btn-sm">
+        <a href={`/task-edit/${id}`} className="controls__btn btn btn-outline-secondary btn-sm">
           <i className="fa fa-pencil"></i>
         </a>
       </div>

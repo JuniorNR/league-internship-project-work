@@ -12,7 +12,7 @@ export const TasksList = (): JSX.Element => {
   };
 
   return (
-    <div className="TasksList">
+    <div className="TasksList mb-2">
       <ul className="TasksList__list">{renderList()}</ul>
     </div>
   );

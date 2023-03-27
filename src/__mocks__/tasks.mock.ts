@@ -12,13 +12,13 @@ export const tasks: TaskEntity[] = [
     id: 1,
     info: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
     isImportant: false,
-    isDone: false,
+    isDone: true,
   },
   {
     name: 'Test 2',
     id: 2,
     info: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-    isImportant: false,
+    isImportant: true,
     isDone: false,
   },
   {
