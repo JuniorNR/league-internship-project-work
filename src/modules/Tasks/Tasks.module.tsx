@@ -6,7 +6,7 @@ export const Tasks = () => {
       <SearchForm />
       <TasksStats />
       <TasksList />
-      <a href="#" className="btn btn-secondary d-block ml-auto">
+      <a href="/task-add" className="btn btn-secondary d-block ml-auto">
         Add Task
       </a>
     </>

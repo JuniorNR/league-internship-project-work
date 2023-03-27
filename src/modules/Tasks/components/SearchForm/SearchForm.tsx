@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { SearchInput } from './../.././../../components/index';
 import { TasksStatusFilter } from './../index';
 import { FilterTypes } from 'domains/index';
-import { FILTER_TYPES } from 'constants/FILTER_TYPES';
+import { FILTER_TYPES } from 'constants/filter_types';
 
 import './SearchForm.css';
 
