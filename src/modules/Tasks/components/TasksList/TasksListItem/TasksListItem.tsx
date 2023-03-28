@@ -46,8 +46,11 @@ export const TasksListItem = ({ name, id, info, isImportant, isDone }: TaskEntit
           disabled={isDoneItem ? true : false}>
           <i className="fa fa-info"></i>
         </button>
-        <button type="button" className="controls__btn btn btn-outline-danger btn-sm" onClick={onChangeDone}>
-          <i className="fa fa-check"></i>
+        <button
+          type="button"
+          className={`controls__btn btn btn-outline-danger btn-sm ${isDoneItem ? 'bg-danger' : ''}`}
+          onClick={onChangeDone}>
+          <i className={`fa fa-check ${isDoneItem ? 'text-white' : ''}`}></i>
         </button>
         <button type="button" className="controls__btn btn btn-outline-danger btn-sm">
           <i className="fa fa-trash-o"></i>
