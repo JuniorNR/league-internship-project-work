@@ -1,19 +1,35 @@
-import { TasksListItem } from './TasksListItem/index';
+import { observer } from 'mobx-react';
 
-import { tasks } from '__mocks__/tasks.mock';
+import { TasksListItem } from '../TasksListItem/index';
+
+import { TasksStoreInstance } from 'modules/Tasks/store';
+
+import { Loader } from 'components/Loader/index';
 
 import './TasksList.css';
 
-export const TasksList = (): JSX.Element => {
-  const renderList = (): JSX.Element[] => {
-    return tasks.map((item) => {
-      return <TasksListItem key={item.id} {...item} />;
-    });
-  };
+const TasksListComponent = (): JSX.Element => {
+  const { tasks, isTasksLoading, changeTaskImportance, changeTaskComplete, deleteTask } = TasksStoreInstance;
 
   return (
-    <div className="TasksList mb-2">
-      <ul className="TasksList__list">{renderList()}</ul>
+    <div className="tasksList mb-2">
+      <Loader isLoading={isTasksLoading}>
+        <ul className="tasksList__list">
+          {tasks.map((item) => {
+            return (
+              <TasksListItem
+                key={item.id}
+                task={item}
+                changeTaskImportance={changeTaskImportance}
+                changeTaskComplete={changeTaskComplete}
+                deleteTask={deleteTask}
+              />
+            );
+          })}
+        </ul>
+      </Loader>
     </div>
   );
 };
+
+export const TasksList = observer(TasksListComponent);

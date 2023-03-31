@@ -1,22 +1,32 @@
+import { Link } from 'react-router-dom';
 import { useState } from 'react';
 
-import { TaskEntity } from 'domains/index';
+import { TaskListItemProps } from './TaskListItemProps.interface';
 
 import './TasksListItem.css';
 
-export const TasksListItem = ({ name, id, info, isImportant, isDone }: TaskEntity): JSX.Element => {
+export const TasksListItem = ({
+  task,
+  changeTaskImportance,
+  changeTaskComplete,
+  deleteTask,
+}: TaskListItemProps): JSX.Element => {
+  const { name, id, info, isImportant, isDone } = task;
   const [isDoneItem, setIsDoneItem] = useState(isDone);
   const [isImportantItem, setIsImportantItem] = useState(isImportant);
 
   const onChangeImportant = () => {
     setIsImportantItem((prev) => !prev);
+    changeTaskImportance(id, !isImportantItem);
   };
 
   const onChangeDone = () => {
     setIsDoneItem((prev) => !prev);
+    changeTaskComplete(id, !isDoneItem);
 
     if (!isDoneItem) {
       setIsImportantItem(false);
+      changeTaskImportance(id, false);
     }
   };
 
@@ -55,9 +65,9 @@ export const TasksListItem = ({ name, id, info, isImportant, isDone }: TaskEntit
         <button type="button" className="controls__btn btn btn-outline-danger btn-sm">
           <i className="fa fa-trash-o"></i>
         </button>
-        <a href={`/task-edit/${id}`} className="controls__btn btn btn-outline-secondary btn-sm">
+        <Link to={`/task/edit/${id}`} className="controls__btn btn btn-outline-secondary btn-sm">
           <i className="fa fa-pencil"></i>
-        </a>
+        </Link>
       </div>
     </li>
   );

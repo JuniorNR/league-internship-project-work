@@ -1,4 +1,4 @@
-import { Tasks } from './../../modules/index';
+import { Tasks } from '../../modules/index';
 import { PageContainer } from 'components/index';
 
 export const TasksPage = (): JSX.Element => {

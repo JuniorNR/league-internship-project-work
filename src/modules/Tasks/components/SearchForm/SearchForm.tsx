@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useState, MouseEvent } from 'react';
 
-import { SearchInput } from './../.././../../components/index';
 import { TasksStatusFilter } from './../index';
-import { FilterTypes } from 'domains/index';
+import { SearchInput } from 'components/index';
+import { FilterTypes, SearchFormEntity } from 'domains/index';
 import { FILTER_TYPES } from 'constants/filter_types';
 
 import './SearchForm.css';
@@ -15,15 +15,18 @@ export const SearchForm = (): JSX.Element => {
 
   const onResetSearchInput = (): void => setSearchInputValue('');
 
-  const onChangeTasksStatusFilter = (type: FilterTypes) => {
-    setFilterType(type);
+  const onChangeTasksStatusFilter = (type: FilterTypes): void => setFilterType(type);
+
+  const onSubmitFormSearch = (event: MouseEvent<HTMLButtonElement>): void => {
+    event.preventDefault();
+    console.log(searchInputValue, filterType);
   };
 
   return (
     <form className="searchForm d-flex justify-content-between align-items-center">
       <SearchInput onChange={onChangeSearchInput} value={searchInputValue} onReset={onResetSearchInput} />
       <TasksStatusFilter taskType={filterType} onChange={onChangeTasksStatusFilter} />
-      <button className="btn btn-primary" type="button">
+      <button className="btn btn-primary" type="button" onClick={(event) => onSubmitFormSearch(event)}>
         Send
       </button>
     </form>

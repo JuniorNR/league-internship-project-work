@@ -6,8 +6,8 @@ export const Router = () => {
   return (
     <Routes>
       <Route path="/" element={<TasksPage />} />
-      <Route path="/task-add" element={<TasksAddPage />} />
-      <Route path="/task-edit/:task_id" element={<TasksEditPage />} />
+      <Route path="/task/add" element={<TasksAddPage />} />
+      <Route path="/task/edit/:task_id" element={<TasksEditPage />} />
     </Routes>
   );
 };

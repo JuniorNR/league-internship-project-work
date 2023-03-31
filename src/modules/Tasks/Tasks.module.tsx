@@ -1,14 +1,25 @@
-import { SearchForm, TasksStats, TasksList } from './components/index';
+import { useEffect } from 'react';
+import { observer } from 'mobx-react';
+import { Link } from 'react-router-dom';
+import { TasksStoreInstance } from './store';
 
-export const Tasks = () => {
+import { SearchForm, TasksStatus, TasksList } from './components/index';
+
+const TasksModule = () => {
+  useEffect(() => {
+    TasksStoreInstance.loadTasks();
+  }, []);
+
   return (
     <>
       <SearchForm />
-      <TasksStats />
+      <TasksStatus />
       <TasksList />
-      <a href="/task-add" className="btn btn-secondary d-block ml-auto">
+      <Link to="/task/add" className="btn btn-secondary d-block ml-auto">
         Add Task
-      </a>
+      </Link>
     </>
   );
 };
+
+export const Tasks = observer(TasksModule);
