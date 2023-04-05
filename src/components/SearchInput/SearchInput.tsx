@@ -1,8 +1,8 @@
-import React, { ChangeEventHandler, MouseEvent } from 'react';
+import React, { ChangeEventHandler, MouseEvent, memo } from 'react';
 import './SearchInput.css';
 import { SearchInputProps } from './SearchInput.types';
 
-export function SearchInput({ onChange, value, onReset }: SearchInputProps) {
+export function SearchInputComponent({ onChange, value, onReset }: SearchInputProps) {
   const onSearchInputChange: ChangeEventHandler<HTMLInputElement> = (evt) => onChange(evt.target.value);
 
   const onResetBtnClick = (evt: MouseEvent<HTMLButtonElement>) => {
@@ -19,3 +19,5 @@ export function SearchInput({ onChange, value, onReset }: SearchInputProps) {
     </div>
   );
 }
+
+export const SearchInput = memo(SearchInputComponent);

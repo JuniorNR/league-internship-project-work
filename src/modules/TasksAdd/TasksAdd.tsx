@@ -1,64 +1,83 @@
-import { useState, MouseEvent } from 'react';
+import { ChangeEvent } from 'react';
+
+import { useForm, SubmitHandler, Controller } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { validationSchema } from './validation.schema';
+
+import { TextField, Checkbox } from 'components/index';
+
+import { TasksAddEntity } from 'domains/index';
 
 import './TasksAdd.css';
 
 export const TasksAdd = (): JSX.Element => {
-  const [name, setName] = useState('');
-  const [info, setInfo] = useState('');
-  const [important, setIsImportant] = useState(false);
+  const defaultValues: TasksAddEntity = {
+    name: '',
+    info: '',
+    isImportant: false,
+  };
 
-  const submitForm = (event: MouseEvent<HTMLButtonElement>): void => {
-    event.preventDefault();
+  const { control, setValue, handleSubmit } = useForm<TasksAddEntity>({
+    defaultValues,
+    resolver: yupResolver(validationSchema),
+  });
+
+  const onChangeName = (event: ChangeEvent<HTMLInputElement>) => {
+    setValue('name', event.target.value);
+  };
+
+  const onChangeInfo = (event: ChangeEvent<HTMLInputElement>) => {
+    setValue('info', event.target.value);
+  };
+
+  const onChangeIsImportant = (event: ChangeEvent<HTMLInputElement>) => {
+    setValue('isImportant', event.target.checked);
+  };
+
+  const onSubmitForm: SubmitHandler<TasksAddEntity> = (data: TasksAddEntity): void => {
+    console.log('name: ', data.name);
+    console.log('info: ', data.info);
+    console.log('is important: ', data.isImportant);
   };
 
   return (
     <>
       <h1 className="text-center">TODO LIST | ADD TASK</h1>
-      <form className="taskAdd">
-        <div className="row mb-3 d-block">
-          <label htmlFor="name" className="taskAdd__label col-sm-2 col-htmlForm-label w-100 mb-2">
-            Task name
-          </label>
-          <div>
-            <input
-              type="text"
-              className="taskAdd__input htmlForm-control w-100"
-              id="name"
-              value={name}
-              onChange={(event) => setName(event.target.value)}
+      <form className="taskAdd" onSubmit={handleSubmit(onSubmitForm)}>
+        <Controller
+          control={control}
+          name="name"
+          render={({ field, fieldState: { error } }) => (
+            <TextField
+              label="Task name"
+              inputType="text"
+              value={field.value}
+              onChange={onChangeName}
+              errorText={error?.message}
             />
-          </div>
-        </div>
-        <div className="row mb-3 d-block">
-          <label htmlFor="info" className="taskAdd__label col-sm-2 col-htmlForm-label w-100 mb-2">
-            What to do(description)
-          </label>
-          <div>
-            <input
-              type="text"
-              className="taskAdd__input htmlForm-control w-100"
-              id="info"
-              value={info}
-              onChange={(event) => setInfo(event.target.value)}
+          )}
+        />
+        <Controller
+          control={control}
+          name="info"
+          render={({ field, fieldState: { error } }) => (
+            <TextField
+              label="What to do(description)"
+              inputType="text"
+              value={field.value}
+              onChange={onChangeInfo}
+              errorText={error?.message}
             />
-          </div>
-        </div>
-        <div className="col-sm-10 mb-3">
-          <div className="form-check">
-            <input
-              className="form-check-input"
-              type="checkbox"
-              value=""
-              id="isImportant"
-              checked={important}
-              onChange={() => setIsImportant((prev) => !prev)}
-            />
-            <label className="form-check-label" htmlFor="isImportant">
-              Important
-            </label>
-          </div>
-        </div>
-        <button type="submit" className="taskAdd__submit btn btn-secondary" onClick={submitForm}>
+          )}
+        />
+        <Controller
+          control={control}
+          name="isImportant"
+          render={({ field, fieldState: { error } }) => (
+            <Checkbox label="Important" checked={field.value} onChange={onChangeIsImportant} />
+          )}
+        />
+        <button type="submit" className="taskAdd__submit btn btn-secondary">
           Add task
         </button>
       </form>

@@ -1,4 +1,4 @@
-import { useState, MouseEvent } from 'react';
+import { useForm, Controller, SubmitHandler } from 'react-hook-form';
 
 import { TasksStatusFilter } from './../index';
 import { SearchInput } from 'components/index';
@@ -8,25 +8,39 @@ import { FILTER_TYPES } from 'constants/filter_types';
 import './SearchForm.css';
 
 export const SearchForm = (): JSX.Element => {
-  const [searchInputValue, setSearchInputValue] = useState('');
-  const [filterType, setFilterType] = useState<FilterTypes>(FILTER_TYPES.ALL);
+  const defaultValues: SearchFormEntity = {
+    searchValue: '',
+    filterType: FILTER_TYPES.ALL,
+  };
 
-  const onChangeSearchInput = (value: string): void => setSearchInputValue(value);
+  const { setValue, handleSubmit, control } = useForm<SearchFormEntity>({ defaultValues });
 
-  const onResetSearchInput = (): void => setSearchInputValue('');
+  const onChangeTasksStatusFilter = (type: FilterTypes) => setValue('filterType', type);
+  const onChangeSearchInput = (value: string) => setValue('searchValue', value);
 
-  const onChangeTasksStatusFilter = (type: FilterTypes): void => setFilterType(type);
+  const onResetSearchInput = () => setValue('searchValue', '');
 
-  const onSubmitFormSearch = (event: MouseEvent<HTMLButtonElement>): void => {
-    event.preventDefault();
-    console.log(searchInputValue, filterType);
+  const onSubmitFormSearch: SubmitHandler<SearchFormEntity> = (data: SearchFormEntity): void => {
+    console.log(data);
   };
 
   return (
-    <form className="searchForm d-flex justify-content-between align-items-center">
-      <SearchInput onChange={onChangeSearchInput} value={searchInputValue} onReset={onResetSearchInput} />
-      <TasksStatusFilter taskType={filterType} onChange={onChangeTasksStatusFilter} />
-      <button className="btn btn-primary" type="button" onClick={(event) => onSubmitFormSearch(event)}>
+    <form
+      className="searchForm d-flex justify-content-between align-items-center"
+      onSubmit={handleSubmit(onSubmitFormSearch)}>
+      <Controller
+        control={control}
+        name="searchValue"
+        render={({ field: { value } }) => (
+          <SearchInput onChange={onChangeSearchInput} value={value} onReset={onResetSearchInput} />
+        )}
+      />
+      <Controller
+        control={control}
+        name="filterType"
+        render={({ field: { value } }) => <TasksStatusFilter taskType={value} onChange={onChangeTasksStatusFilter} />}
+      />
+      <button className="btn btn-primary" type="submit">
         Send
       </button>
     </form>

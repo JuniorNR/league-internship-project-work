@@ -5,7 +5,7 @@ import { TasksStoreInstance } from './store';
 
 import { SearchForm, TasksStatus, TasksList } from './components/index';
 
-const TasksModule = () => {
+const TasksComponent = () => {
   useEffect(() => {
     TasksStoreInstance.loadTasks();
   }, []);
@@ -22,4 +22,4 @@ const TasksModule = () => {
   );
 };
 
-export const Tasks = observer(TasksModule);
+export const Tasks = observer(TasksComponent);

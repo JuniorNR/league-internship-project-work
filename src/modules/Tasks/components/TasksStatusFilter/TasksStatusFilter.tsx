@@ -1,9 +1,9 @@
-import { MouseEvent, useRef } from 'react';
+import { MouseEvent, memo, useRef } from 'react';
 
 import { TasksStatusFilterProps } from './TasksStatusFilter.interface';
 import { FilterTypes } from 'domains/index';
 
-export const TasksStatusFilter = ({ taskType, onChange }: TasksStatusFilterProps): JSX.Element => {
+const TasksStatusFilterComponent = ({ taskType, onChange }: TasksStatusFilterProps): JSX.Element => {
   const buttonsGroupRef = useRef<HTMLDivElement>(null);
 
   const onChangeType = (event: MouseEvent<HTMLDivElement> & { target: HTMLButtonElement }): void => {
@@ -42,3 +42,5 @@ export const TasksStatusFilter = ({ taskType, onChange }: TasksStatusFilterProps
     </div>
   );
 };
+
+export const TasksStatusFilter = memo(TasksStatusFilterComponent);

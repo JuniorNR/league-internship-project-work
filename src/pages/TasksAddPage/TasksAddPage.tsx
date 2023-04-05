@@ -1,4 +1,4 @@
-import { TasksAdd } from 'modules/TasksAdd';
+import { TasksAdd } from 'modules/index';
 
 import { PageContainer } from 'components/index';
 

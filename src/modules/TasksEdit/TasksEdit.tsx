@@ -1,0 +1,137 @@
+import { ChangeEvent, useRef } from 'react';
+import { useParams } from 'react-router-dom';
+import { yupResolver } from '@hookform/resolvers/yup';
+
+import { useForm, Controller, SubmitHandler } from 'react-hook-form';
+import { schemaTaskEdit } from './validation.schema';
+
+import { TextField, Checkbox } from 'components/index';
+
+import { tasks } from '__mocks__/tasks.mock';
+
+import { TaskEntity } from 'domains/index';
+
+import './TasksEdit.css';
+
+export const TasksEdit = () => {
+  const { task_id } = useParams();
+  const isImportantRef = useRef<HTMLInputElement>(null);
+
+  const { setValue, getValues, control, handleSubmit } = useForm<TaskEntity>({
+    resolver: yupResolver(schemaTaskEdit),
+  });
+
+  if (task_id) {
+    tasks.forEach((item) => {
+      if (item.id === +task_id) {
+        setValue('name', item.name);
+        setValue('info', item.info);
+        setValue('isImportant', item.isImportant);
+        setValue('isDone', item.isDone);
+      }
+    });
+  }
+
+  const onChangeName = (event: ChangeEvent<HTMLInputElement>) => {
+    setValue('name', event.target.value);
+  };
+
+  const onChangeInfo = (event: ChangeEvent<HTMLInputElement>) => {
+    setValue('info', event.target.value);
+  };
+
+  const onChangeIsDone = (event: ChangeEvent<HTMLInputElement>) => {
+    setValue('isDone', event.target.checked);
+
+    if (event.target.checked) {
+      setValue('isImportant', false);
+      isImportantRef.current?.setAttribute('disabled', 'true');
+    } else {
+      isImportantRef.current?.removeAttribute('disabled');
+    }
+  };
+
+  const onChangeIsImportant = (event: ChangeEvent<HTMLInputElement>) => {
+    setValue('isImportant', event.target.checked);
+  };
+
+  const onSubmitForm: SubmitHandler<TaskEntity> = (data: TaskEntity): void => {
+    console.log(data);
+  };
+
+  return (
+    <>
+      <h1 className="text-center">TODO LIST | EDIT TASK {task_id}</h1>
+      <form className="taskEdit" onSubmit={handleSubmit(onSubmitForm)}>
+        <Controller
+          control={control}
+          name="name"
+          render={({ field: { value }, fieldState: { error } }) => (
+            <TextField
+              label="Task name"
+              inputType="text"
+              onChange={onChangeName}
+              value={value}
+              errorText={error?.message}
+            />
+          )}
+        />
+        <Controller
+          control={control}
+          name="info"
+          render={({ field: { value }, fieldState: { error } }) => (
+            <TextField
+              label="What to do(description)"
+              inputType="text"
+              onChange={onChangeInfo}
+              value={value}
+              errorText={error?.message}
+            />
+          )}
+        />
+        <Controller
+          control={control}
+          name="isImportant"
+          render={({ field: { value } }) => (
+            // <Checkbox label="Important" checked={value} disabled={getValues('isDone')} onChange={onChangeIsImportant} />
+            <div className={`form-check mb-3`}>
+              <input
+                ref={isImportantRef}
+                className="form-check-input"
+                type="checkbox"
+                id="isImportant"
+                checked={value}
+                onChange={onChangeIsImportant}
+              />
+              <label className="form-check-label" htmlFor="isImportant">
+                Important
+              </label>
+            </div>
+          )}
+        />
+        <Controller
+          control={control}
+          name="isDone"
+          render={({ field: { value } }) => (
+            // <Checkbox label="Done" checked={value} onChange={onChangeIsDone} />
+            <div className={`form-check mb-3`}>
+              <input
+                className="form-check-input"
+                type="checkbox"
+                id="isDone"
+                checked={value}
+                onChange={onChangeIsDone}
+              />
+              <label className="form-check-label" htmlFor="isDone">
+                Done
+              </label>
+            </div>
+          )}
+        />
+        <button type="submit" className="taskEdit__submit btn btn-secondary">
+          Edit task
+        </button>
+      </form>
+    </>
+  );
+};

@@ -7,7 +7,6 @@ export function Checkbox({ label, checked, onChange, disabled, containerClassNam
       <input
         className="form-check-input"
         type="checkbox"
-        value=""
         id={label}
         disabled={disabled}
         checked={checked}
