@@ -43,10 +43,10 @@ export const AddForm = () => {
 
   const onSubmitForm: SubmitHandler<TaskAddEntity> = async (data: TaskAddEntity): Promise<void> => {
     console.log(data);
-    const response = TasksStoreInstance.postTask(data);
-    // if (response) {
-    //   redirect(PATHS.ROOT);
-    // }
+    const response = await TasksStoreInstance.postTask(data);
+    if (response) {
+      redirect(PATHS.ROOT);
+    }
   };
 
   return (
