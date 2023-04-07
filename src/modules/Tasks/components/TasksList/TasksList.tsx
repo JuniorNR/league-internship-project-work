@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, UIEventHandler, UIEvent } from 'react';
 import { observer } from 'mobx-react';
 
 import { TasksListItem } from '../TasksListItem/index';
@@ -21,15 +21,15 @@ const TasksListComponent = (): JSX.Element => {
     }
   }, [tasks]);
 
-  const onScrollTasksList = (event: any) => {
-    setScrollTasksList(event.target.scrollTop);
+  const onScrollTasksList = (event: UIEvent<HTMLUListElement>) => {
+    setScrollTasksList((event.target as HTMLElement).scrollTop);
   };
 
   return (
     <div className="tasksList mb-2">
       <Loader isLoading={isTasksLoading}>
         {tasks.length !== 0 ? (
-          <ul ref={TasksListRef} className="tasksList__list" onScroll={onScrollTasksList}>
+          <ul className="tasksList__list" ref={TasksListRef} onScroll={onScrollTasksList}>
             {tasks.map((item) => {
               return (
                 <TasksListItem
