@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, memo } from 'react';
 
 import { TaskListItemProps } from './TaskListItemProps.interface';
 
 import './TasksListItem.css';
 
-export const TasksListItem = ({
+const TasksListItemComponent = ({
   task,
   changeTaskImportance,
   changeTaskComplete,
@@ -28,6 +28,10 @@ export const TasksListItem = ({
       setIsImportantItem(false);
       changeTaskImportance(id, false);
     }
+  };
+
+  const onDeleteTask = () => {
+    deleteTask(id);
   };
 
   return (
@@ -62,7 +66,7 @@ export const TasksListItem = ({
           onClick={onChangeDone}>
           <i className={`fa fa-check ${isDoneItem ? 'text-white' : ''}`}></i>
         </button>
-        <button type="button" className="controls__btn btn btn-outline-danger btn-sm">
+        <button type="button" className="controls__btn btn btn-outline-danger btn-sm" onClick={onDeleteTask}>
           <i className="fa fa-trash-o"></i>
         </button>
         <Link to={`/task/edit/${id}`} className="controls__btn btn btn-outline-secondary btn-sm">
@@ -72,3 +76,5 @@ export const TasksListItem = ({
     </li>
   );
 };
+
+export const TasksListItem = memo(TasksListItemComponent);

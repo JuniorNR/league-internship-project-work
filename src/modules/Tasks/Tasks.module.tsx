@@ -6,8 +6,9 @@ import { TasksStoreInstance } from './store';
 import { SearchForm, TasksStatus, TasksList } from './components/index';
 
 const TasksComponent = () => {
+  const { updateTasks } = TasksStoreInstance;
   useEffect(() => {
-    TasksStoreInstance.loadTasks();
+    updateTasks();
   }, []);
 
   return (

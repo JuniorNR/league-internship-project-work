@@ -1,1 +1,1 @@
-export * from './TasksEdit';
+export * from './TasksEdit.module';

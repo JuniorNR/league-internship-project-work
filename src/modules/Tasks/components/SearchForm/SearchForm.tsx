@@ -1,5 +1,7 @@
 import { useForm, Controller, SubmitHandler } from 'react-hook-form';
 
+import { TasksStoreInstance } from './../../store/index';
+
 import { TasksStatusFilter } from './../index';
 import { SearchInput } from 'components/index';
 import { FilterTypes, SearchFormEntity } from 'domains/index';
@@ -13,6 +15,8 @@ export const SearchForm = (): JSX.Element => {
     filterType: FILTER_TYPES.ALL,
   };
 
+  const { updateTasks } = TasksStoreInstance;
+
   const { setValue, handleSubmit, control } = useForm<SearchFormEntity>({ defaultValues });
 
   const onChangeTasksStatusFilter = (type: FilterTypes) => setValue('filterType', type);
@@ -21,7 +25,7 @@ export const SearchForm = (): JSX.Element => {
   const onResetSearchInput = () => setValue('searchValue', '');
 
   const onSubmitFormSearch: SubmitHandler<SearchFormEntity> = (data: SearchFormEntity): void => {
-    console.log(data);
+    updateTasks(data);
   };
 
   return (

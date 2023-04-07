@@ -8,9 +8,10 @@ export interface TaskEntity {
   isDone: boolean;
 }
 
-export interface TasksAddEntity {
+export interface TaskAddEntity {
   name: string,
   info: string,
+  isDone: boolean,
   isImportant: boolean
 }
 
