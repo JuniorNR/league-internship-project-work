@@ -1,37 +1,37 @@
 import { observer } from 'mobx-react';
 
+import { Box } from '@mui/material';
+
 import { TasksStoreInstance } from 'modules/Tasks/store/index';
 
+import { StyledUl, StyledBadge } from './TasksStatus.styles';
 import { Loader } from 'components/Loader';
-
-import './TasksStatus.css';
 
 const TasksStatusComponent = () => {
   const { tasksStatus, isTasksLoading } = TasksStoreInstance;
-
   return (
-    <div className="tasksStatus mb-3">
-      <ul className="tasksStatus__list d-flex justify-content-between">
-        <li className="tasksStatus__item">
-          <span>Total: </span>
+    <Box mb="15px">
+      <StyledUl>
+        <Box component="li">
+          <Box component="span">Total: </Box>
           <Loader isLoading={isTasksLoading} variant="dot">
-            <span className="badge bg-secondary">{tasksStatus.total}</span>
+            <StyledBadge>{tasksStatus.total}</StyledBadge>
           </Loader>
-        </li>
-        <li className="tasksStatus__item">
-          <span>Important: </span>
+        </Box>
+        <Box component="li">
+          <Box component="span">Important: </Box>
           <Loader isLoading={isTasksLoading} variant="dot">
-            <span className="badge bg-secondary">{tasksStatus.important}</span>
+            <StyledBadge>{tasksStatus.important}</StyledBadge>
           </Loader>
-        </li>
-        <li className="tasksStatus__item">
-          <span>Done: </span>
+        </Box>
+        <Box component="li">
+          <Box component="span">Done: </Box>
           <Loader isLoading={isTasksLoading} variant="dot">
-            <span className="badge bg-secondary">{tasksStatus.done}</span>
+            <StyledBadge>{tasksStatus.done}</StyledBadge>
           </Loader>
-        </li>
-      </ul>
-    </div>
+        </Box>
+      </StyledUl>
+    </Box>
   );
 };
 

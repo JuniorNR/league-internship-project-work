@@ -1,45 +1,31 @@
-import { MouseEvent, memo, useRef } from 'react';
+import { MouseEvent, memo, useState } from 'react';
+
+import { Box, ToggleButton, ToggleButtonGroup } from '@mui/material';
+import styled from '@emotion/styled';
 
 import { TasksStatusFilterProps } from './TasksStatusFilter.interface';
 import { FilterTypes } from 'domains/index';
+import { FILTER_TYPES } from 'constants/index';
+
+const StyledToggleButtonGroup = styled(ToggleButtonGroup)({
+  height: '100%',
+});
 
 const TasksStatusFilterComponent = ({ taskType, onChange }: TasksStatusFilterProps): JSX.Element => {
-  const buttonsGroupRef = useRef<HTMLDivElement>(null);
-
-  const onChangeType = (event: MouseEvent<HTMLDivElement> & { target: HTMLButtonElement }): void => {
-    onChange(event.target.textContent as FilterTypes);
-    changeActiveClass(event.target.textContent);
-  };
-
-  const changeActiveClass = (element: string | null) => {
-    if (buttonsGroupRef.current) {
-      Array.from(buttonsGroupRef.current.children).forEach((item) => {
-        if (item.textContent === element) {
-          item.classList.add('btn-info');
-          item.classList.remove('btn-outline-secondary');
-        } else {
-          item.classList.add('btn-outline-secondary');
-          item.classList.remove('btn-info');
-        }
-      });
-    }
+  const [alignment, setAlignment] = useState(FILTER_TYPES.ALL);
+  const handleChange = (event: MouseEvent<HTMLElement>, newAlignment: string) => {
+    onChange(newAlignment as FilterTypes);
+    setAlignment(newAlignment);
+    console.log();
   };
 
   return (
-    <div ref={buttonsGroupRef} className="btn-group" onClick={onChangeType}>
-      <button type="button" className="btn btn-info">
-        ALL
-      </button>
-      <button type="button" className="btn btn-outline-secondary">
-        ACTIVE
-      </button>
-      <button type="button" className="btn btn-outline-secondary">
-        DONE
-      </button>
-      <button type="button" className="btn btn-outline-secondary">
-        IMPORTANT
-      </button>
-    </div>
+    <StyledToggleButtonGroup color="primary" value={alignment} exclusive onChange={handleChange} aria-label="Platform">
+      <ToggleButton value="ALL">{FILTER_TYPES.ALL}</ToggleButton>
+      <ToggleButton value="ACTIVE">{FILTER_TYPES.ACTIVE}</ToggleButton>
+      <ToggleButton value="DONE">{FILTER_TYPES.DONE}</ToggleButton>
+      <ToggleButton value="IMPORTANT">{FILTER_TYPES.IMPORTANT}</ToggleButton>
+    </StyledToggleButtonGroup>
   );
 };
 

@@ -1,10 +1,13 @@
+import { Typography } from '@mui/material';
 import { Tasks } from '../../modules/index';
 import { PageContainer } from 'components/index';
 
 export const TasksPage = (): JSX.Element => {
   return (
     <PageContainer>
-      <h1>TODO LIST</h1>
+      <Typography variant="h3" component={'h1'}>
+        TODO LIST
+      </Typography>
       <Tasks />
     </PageContainer>
   );

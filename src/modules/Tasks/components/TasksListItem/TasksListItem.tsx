@@ -47,7 +47,7 @@ const TasksListItemComponent = ({
           className={`${isImportantItem ? 'text-success fw-bold' : ''} ${
             isDoneItem ? 'text-decoration-line-through' : ''
           }`}>
-          {info}
+          {info.length > 50 ? info.slice(0, 50) + '...' : info}
         </p>
       </div>
       <div className="TasksList__controls d-flex justify-content-between">
