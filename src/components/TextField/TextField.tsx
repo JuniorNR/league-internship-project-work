@@ -22,7 +22,7 @@ export function TextField({
         id={label}
         placeholder={placeholder}
         value={value}
-        onChange={onChange}
+        onChange={(event) => onChange(event)}
       />
       {errorText && <div className="invalid">{errorText}</div>}
     </div>

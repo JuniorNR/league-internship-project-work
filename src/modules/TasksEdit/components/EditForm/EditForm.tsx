@@ -1,4 +1,4 @@
-import { ChangeEvent, useRef, useEffect } from 'react';
+import { ChangeEvent, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { observer } from 'mobx-react';
 import { useForm, Controller, SubmitHandler } from 'react-hook-form';
@@ -108,7 +108,7 @@ const EditFormComponent = () => {
                         className="form-check-input"
                         type="checkbox"
                         id="isImportant"
-                        disabled={task.isDone === true ? true : false}
+                        disabled={task?.isDone === true ? true : false}
                         checked={value}
                         onChange={onChangeIsImportant}
                       />
