@@ -1,13 +1,13 @@
 import { useState, useRef, useEffect, UIEventHandler, UIEvent } from 'react';
 import { observer } from 'mobx-react';
 
-import { TasksListItem } from '../TasksListItem/index';
+import { Typography } from '@mui/material';
 
+import { TasksListItem } from '../TasksListItem/index';
+import { StyledTasksList, StyledTasksListUl, StyledNotFound } from './TasksList.styles';
 import { TasksStoreInstance } from 'modules/Tasks/store';
 
 import { Loader } from 'components/Loader/index';
-
-import './TasksList.css';
 
 const TasksListComponent = (): JSX.Element => {
   const { tasks, isTasksLoading, changeTaskImportance, changeTaskComplete, deleteTask } = TasksStoreInstance;
@@ -26,10 +26,10 @@ const TasksListComponent = (): JSX.Element => {
   };
 
   return (
-    <div className="tasksList mb-2">
+    <StyledTasksList>
       <Loader isLoading={isTasksLoading}>
         {tasks.length !== 0 ? (
-          <ul className="tasksList__list" ref={TasksListRef} onScroll={onScrollTasksList}>
+          <StyledTasksListUl ref={TasksListRef} onScroll={onScrollTasksList} scrollbar-width="10px">
             {tasks.map((item) => {
               return (
                 <TasksListItem
@@ -41,14 +41,14 @@ const TasksListComponent = (): JSX.Element => {
                 />
               );
             })}
-          </ul>
+          </StyledTasksListUl>
         ) : (
-          <div className="tasksList__notFound">
-            <p>Not found</p>
-          </div>
+          <StyledNotFound>
+            <Typography>Not found</Typography>
+          </StyledNotFound>
         )}
       </Loader>
-    </div>
+    </StyledTasksList>
   );
 };
 

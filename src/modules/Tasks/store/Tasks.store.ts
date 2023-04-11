@@ -149,7 +149,6 @@ class Tasks {
     try {
       await TasksAgentInstance.updateTask(taskID, { isImportant: currentStatus });
       const { tasks, tasksStatus } = await this.getTasks(this._searchForm);
-      console.log(tasks);
       this._tasks = tasks;
       this._tasksStatus = tasksStatus;
     } catch {
